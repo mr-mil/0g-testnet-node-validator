@@ -171,3 +171,37 @@ sudo journalctl -u 0gchaind.service -f --no-hostname -o cat
 You can exit the log screen by pressing Ctrl+C
 
 Ignore the errors, your node will sync in the next few hours.
+
+<h3>10. Create or Recover Wallet :</h3>
+
+If you want to create a new wallet, run the following command:
+
+Note: Instead of WALLET_NAME, you can specify a desired name for your wallet.
+
+```
+0gchaind keys add WALLET_NAME --eth
+```
+
+If you have already created a wallet and want to use it, run the following command and enter the recovery words of your wallet:
+
+Note: Instead of WALLET_NAME, you can specify a desired name for your wallet.
+
+```
+0gchaind keys add WALLET_NAME --eth --recover
+```
+
+<h3>11. Export EVM public address and private key of the 0G wallet :</h3>
+
+Note: Replace WALLET_NAME with the name of your wallet that you determined in the previous step in both codes below.
+
+<h4>A. Public Key :</h4>h4>
+
+```
+echo "0x$(0gchaind debug addr $(0gchaind keys show WALLET_NAME -a) | grep hex | awk '{print $3}')"
+```
+
+<h4>A. Private Key :</h4>h4>
+
+```
+0gchaind keys unsafe-export-eth-key WALLET_NAME
+```
