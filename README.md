@@ -210,4 +210,37 @@ Now you can check the sync status of your node at any time with the following co
 ```
 0gchaind status | jq
 ```
+Whenever the value of catching_up becomes false, it means that your node is synced. Now you can continue the steps.
 
+<img src="https://github.com/mr-mil/0g-testnet-node-validator/assets/139977229/ddb38abd-dde4-4d55-a70f-246e76482b68">
+
+<h3>12. Get Faucet :</h3>
+
+Get faucet tokens here. You will receive it with EVM address :
+<a href="https://faucet.0g.ai">https://faucet.0g.ai</a>
+
+Note: Whenever you see faucet in your wallet, go to the next step.
+
+<h3>13. Create Validator :</h3>
+
+Replace your NODE_NAME & WALLET_NAME :
+
+```
+0gchaind tx staking create-validator \
+  --amount=1000000ua0gi \
+  --pubkey=$(0gchaind tendermint show-validator) \
+  --moniker=NODE_NAME \
+  --chain-id=zgtendermint_16600-1 \
+  --commission-rate=0.05 \
+  --commission-max-rate=0.10 \
+  --commission-max-change-rate=0.01 \
+  --min-self-delegation=1 \
+  --from=WALLET_NAME \
+  --identity="" \
+  --website="https://github.com/mr-mil" \
+  --details="Mrmil Community" \
+  --node=http://localhost:16657 \
+  -y
+```
+
+Congratulations, your validator node has been successfully launched.
