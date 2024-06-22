@@ -193,14 +193,21 @@ Note: Instead of WALLET_NAME, you can specify a desired name for your wallet.
 
 Note: Replace WALLET_NAME with the name of your wallet that you determined in the previous step in both codes below.
 
-<h4>A. Public Key :</h4>h4>
+<h4>A. Public Key :</h4>
 
 ```
 echo "0x$(0gchaind debug addr $(0gchaind keys show WALLET_NAME -a) | grep hex | awk '{print $3}')"
 ```
 
-<h4>A. Private Key :</h4>h4>
+<h4>A. Private Key :</h4>
 
 ```
 0gchaind keys unsafe-export-eth-key WALLET_NAME
 ```
+
+Now you can check the sync status of your node at any time with the following command:
+
+```
+0gchaind status | jq
+```
+
