@@ -50,3 +50,51 @@ sudo ln -s $HOME/.0gchain/cosmovisor/current/bin/0gchaind /usr/local/bin/0gchain
 ```
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@v1.5.0
 ```
+
+<h3>4. Create Public Node Service File :</h3>
+
+```
+sudo tee /etc/systemd/system/0gchaind.service > /dev/null << EOF
+[Unit]
+Description=0gchaind node service
+After=network-online.target
+
+[Service]
+User=$USER
+ExecStart=$(which cosmovisor) run start
+Restart=on-failure
+RestartSec=10
+LimitNOFILE=65535
+Environment="DAEMON_HOME=$HOME/.0gchain"
+Environment="DAEMON_NAME=0gchaind"
+Environment="UNSAFE_SKIP_BACKUP=true"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:$HOME/.0gchain/cosmovisor/current/bin"
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+```
+sudo ln -s $HOME/.0gchain/cosmovisor/genesis $HOME/.0gchain/cosmovisor/current -f
+sudo ln -s $HOME/.0gchain/cosmovisor/current/bin/0gchaind /usr/local/bin/0gchaind -f
+```
+
+```
+sudo systemctl daemon-reload
+sudo systemctl enable 0gchaind.service
+```
+
+<h3>5. Initiate Node :</h3>
+
+```
+0gchaind config chain-id zgtendermint_16600-1
+0gchaind config keyring-backend os
+0gchaind config node tcp://localhost:16657
+```
+
+In the code below, instead of NODE_NAME, enter your desired name for the node and then execute the command:
+
+```
+0gchaind init NODE_NAME --chain-id zgtendermint_16600-1
+```
