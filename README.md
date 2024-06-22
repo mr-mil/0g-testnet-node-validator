@@ -1,4 +1,3 @@
-# 0g-testnet-node-validator
 <h1>Complete Guide to Node Validator of the 0Gravity Project</h1>
 <h2>Recommended System :</h2>
 <ul>
